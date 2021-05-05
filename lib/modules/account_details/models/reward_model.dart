@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-
 class Reward extends Equatable {
   final String name;
   final String description;
