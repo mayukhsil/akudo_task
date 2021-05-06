@@ -1,13 +1,14 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 
-abstract class AccountDetailsEvent extends Equatable{}
-
-class UserDetails extends AccountDetailsEvent {
+abstract class AccountDetailsEvent extends Equatable{
   @override
-  List<Object> get props => [];
+  List<Object> get props => null;
 }
 
-class RewardDetails extends AccountDetailsEvent {
-  @override
-  List<Object> get props => [];
+class LoadUserDetailsEvent extends AccountDetailsEvent {}
+
+class AddUserFriendEvent extends AccountDetailsEvent {
+  final int friendId;
+  AddUserFriendEvent({this.friendId});
 }
