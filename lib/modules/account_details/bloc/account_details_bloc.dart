@@ -2,7 +2,6 @@ import 'package:akudo_task/modules/account_details/bloc/account_details_event.da
 import 'package:akudo_task/modules/account_details/bloc/account_details_state.dart';
 import 'package:akudo_task/modules/account_details/models/user_model.dart';
 import 'package:akudo_task/modules/account_details/repos/user_repository.dart';
-import 'package:akudo_task/modules/transaction/view/loading_view.dart';
 import 'package:bloc/bloc.dart';
 
 class AccountDetailsBloc extends Bloc<AccountDetailsEvent,AccountDetailsState> {

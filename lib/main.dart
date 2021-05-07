@@ -18,7 +18,9 @@ class Akudo extends StatelessWidget {
         )),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Akudo Task',
+        theme: ThemeData.dark(),
         home: AccountDetailsView(),
       ),
     );
