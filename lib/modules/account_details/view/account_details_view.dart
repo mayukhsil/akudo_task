@@ -1,3 +1,4 @@
+import 'package:akudo_task/config/colors.dart';
 import 'package:akudo_task/config/styles.dart';
 import 'package:akudo_task/modules/account_details/bloc/account_details_bloc.dart';
 import 'package:akudo_task/modules/account_details/bloc/account_details_state.dart';
@@ -112,9 +113,8 @@ class AccountDetailsView extends StatelessWidget {
                     ],
                   ),
                   OpenContainer(
-                    openColor: Colors.tealAccent,
-                    closedColor: Colors.tealAccent,
-                    transitionDuration: Duration(milliseconds: 600),
+                    openColor: Colors.grey,
+                    closedColor: appGreenColor,
                     openBuilder: (BuildContext context,
                         void Function({Object returnValue}) action) {
                       return TransactionView();
@@ -125,15 +125,15 @@ class AccountDetailsView extends StatelessWidget {
                         height: 60.sp,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            color: Colors.tealAccent,
+                            color: appGreenColor,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
                                 bottomRight: Radius.circular(10))),
                         child: Center(
                             child: Text(
-                          'Pay/Receive Money',
+                          'Send Money',
                           style: size18.copyWith(
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.bold,
                               color: Colors.black87,
                           ),
                         )),

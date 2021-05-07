@@ -2,6 +2,7 @@ import 'package:akudo_task/modules/account_details/bloc/account_details_bloc.dar
 import 'package:akudo_task/modules/account_details/repos/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'modules/account_details/view/account_details_view.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class Akudo extends StatelessWidget {
           userRepository: UserRepository()
         )),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Akudo Task',
         theme: ThemeData.dark(),
