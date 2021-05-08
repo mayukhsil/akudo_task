@@ -33,6 +33,7 @@ class _AccountDetailsViewState extends State<AccountDetailsView> {
   }
 
   var transactionStatus;
+  var res;
 
   String returnStatus({String status}){
     if(status == 'true'){
@@ -133,9 +134,9 @@ class _AccountDetailsViewState extends State<AccountDetailsView> {
                                     style: size18,
                                   ),
                                   Text(
-                                    returnStatus(status: _accountBlocSink.userRepository.getUserDetails().transactions[item].isDebit.toString()
+                                    res = returnStatus(status: _accountBlocSink.userRepository.getUserDetails().transactions[item].isDebit.toString()
                                     ),
-                                    style: size18.copyWith(color: Colors.green),
+                                    style: size18.copyWith(color: res == 'Success'?Colors.green:Colors.red),
                                   )
                                 ],
                               );
