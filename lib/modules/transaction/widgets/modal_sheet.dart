@@ -12,7 +12,9 @@ showCustomModalSheet(
     String receiver,
     String btnText,
     Color color,
-    Function onModalPress}){
+    Function onModalPress,
+    List<String> users
+    }){
   return Get.bottomSheet(
       Container(
         height: Get.height / 2.2,
@@ -37,7 +39,7 @@ showCustomModalSheet(
                     width: 160.sp,
                     child: DropdownSearch<String>(
                       mode: Mode.DIALOG,
-                      items: ['User 1','User 2','User 3'],
+                      items: users,
                       hint: 'Select $transactionType',
                     ),
                   ),
@@ -51,6 +53,12 @@ showCustomModalSheet(
                     height: 60.sp,
                     child: FormBuilderTextField(
                       style: size24,
+                      validator: (v){
+                        if(v.isEmpty){
+                          var amount = v;
+                        }
+                        return null;
+                      },
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           prefix: Text('\u20B9'),
@@ -67,9 +75,15 @@ showCustomModalSheet(
                   ),
                   SizedBox(height: 10.sp,),
                   Container(
-                    height: 50.sp,
+                    height: 45.sp,
                     child: FormBuilderTextField(
                       style: size16,
+                      validator: (v){
+                        if(v.isEmpty){
+                          var desc = v;
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
                           hintText: 'Description',
@@ -87,7 +101,9 @@ showCustomModalSheet(
                 ],
               ),
               InkWell(
-                onTap: onModalPress,
+                onTap: (){
+
+                },
                 child: Container(
                   height: 60.sp,
                   width: double.infinity,

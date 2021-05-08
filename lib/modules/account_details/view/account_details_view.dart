@@ -2,6 +2,8 @@ import 'package:akudo_task/config/colors.dart';
 import 'package:akudo_task/config/styles.dart';
 import 'package:akudo_task/modules/account_details/bloc/account_details_bloc.dart';
 import 'package:akudo_task/modules/account_details/bloc/account_details_state.dart';
+import 'package:akudo_task/modules/account_details/models/user_model.dart';
+import 'package:akudo_task/modules/account_details/repos/user_repository.dart';
 import 'package:akudo_task/modules/transaction/view/transaction_view.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/widgets.dart';
@@ -9,10 +11,42 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AccountDetailsView extends StatelessWidget {
+class AccountDetailsView extends StatefulWidget {
+
+  @override
+  _AccountDetailsViewState createState() => _AccountDetailsViewState();
+}
+
+class _AccountDetailsViewState extends State<AccountDetailsView> {
+
+  AccountDetailsBloc _accountBlocSink;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _accountBlocSink.close();
+  }
+
+  var transactionStatus;
+
+  String returnStatus({String status}){
+    if(status == 'true'){
+      return 'Success';
+    }
+    else
+      return 'Failed';
+  }
+
   @override
   Widget build(BuildContext context) {
+
     final Size screenSize = MediaQuery.of(context).size;
+    _accountBlocSink = BlocProvider.of<AccountDetailsBloc>(context);
 
     ScreenUtil.init(
         BoxConstraints(
@@ -25,6 +59,9 @@ class AccountDetailsView extends StatelessWidget {
           padding: EdgeInsets.all(20.sp),
           child: BlocBuilder<AccountDetailsBloc, AccountDetailsState>(
             builder: (context, state) {
+              if(state is UserDetailsLoadingState){
+                return CircularProgressIndicator();
+              }
               return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -50,7 +87,7 @@ class AccountDetailsView extends StatelessWidget {
                             'Amount',
                             style: size14.copyWith(color: Colors.white38),
                           ),
-                          Text('Rs. 10,235.5', style: size30),
+                          Text('Rs. ${_accountBlocSink.userRepository.getUserDetails().accountBalance}', style: size30),
                         ],
                       ),
                       SizedBox(
@@ -64,7 +101,7 @@ class AccountDetailsView extends StatelessWidget {
                             style: size14.copyWith(color: Colors.white38),
                           ),
                           Text(
-                            '425',
+                            '${_accountBlocSink.userRepository.getUserDetails().rewards.length}',
                             style: size30,
                           )
                         ],
@@ -82,32 +119,28 @@ class AccountDetailsView extends StatelessWidget {
                           SizedBox(
                             height: 5.sp,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Rs.55.0 Sent to Friend 2',
-                                style: size18,
-                              ),
-                              Text(
-                                'Successful',
-                                style: size18.copyWith(color: Colors.green),
-                              )
-                            ],
+                          ListView.builder(
+                            itemCount: 2,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (context,item){
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Rs. ${_accountBlocSink.userRepository.getUserDetails().transactions[item].amount} Sent to Friend ${_accountBlocSink.userRepository.getUserDetails().transactions[item].id}',
+                                    style: size18,
+                                  ),
+                                  Text(
+                                    returnStatus(status: _accountBlocSink.userRepository.getUserDetails().transactions[item].isDebit.toString()
+                                    ),
+                                    style: size18.copyWith(color: Colors.green),
+                                  )
+                                ],
+                              );
+                            },
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Rs.55.0 Sent to Friend 2',
-                                style: size18,
-                              ),
-                              Text(
-                                'Failed',
-                                style: size18.copyWith(color: Colors.red),
-                              )
-                            ],
-                          )
                         ],
                       ),
                     ],
@@ -117,7 +150,7 @@ class AccountDetailsView extends StatelessWidget {
                     closedColor: appGreenColor,
                     openBuilder: (BuildContext context,
                         void Function({Object returnValue}) action) {
-                      return TransactionView();
+                      return TransactionView(_accountBlocSink.userRepository.getUserDetails().userFriends.map((e) => e.toString()).toList());
                     },
                     closedBuilder:
                         (BuildContext context, void Function() action) {

@@ -6,7 +6,9 @@ abstract class AccountDetailsEvent extends Equatable{
   List<Object> get props => null;
 }
 
-class LoadUserDetailsEvent extends AccountDetailsEvent {}
+class LoadUserDetailsEvent extends AccountDetailsEvent {
+  LoadUserDetailsEvent();
+}
 
 class AddUserFriendEvent extends AccountDetailsEvent {
   final int friendId;

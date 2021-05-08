@@ -7,14 +7,10 @@ abstract class AccountDetailsState extends Equatable{
   List<Object> get props => [];
 }
 
-class AccountInitState extends AccountDetailsState{
-  AccountInitState();
-}
 
 class UserDetailsLoadedState extends AccountDetailsState{
   final User userDetails;
-  final int friendId;
-  UserDetailsLoadedState({@required this.userDetails,this.friendId}):assert (userDetails!=null);
+  UserDetailsLoadedState({@required this.userDetails});
 }
 
 class UserDetailsLoadingState extends AccountDetailsState{

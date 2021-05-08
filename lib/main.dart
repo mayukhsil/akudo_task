@@ -1,5 +1,7 @@
 import 'package:akudo_task/modules/account_details/bloc/account_details_bloc.dart';
 import 'package:akudo_task/modules/account_details/repos/user_repository.dart';
+import 'package:akudo_task/modules/transaction/bloc/transaction_bloc.dart';
+import 'package:akudo_task/modules/transaction/repos/transaction_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -17,6 +19,9 @@ class Akudo extends StatelessWidget {
         BlocProvider(create: (context) => AccountDetailsBloc(
           userRepository: UserRepository()
         )),
+        BlocProvider(create: (context) => TransactionBloc(
+          transactionsRepository: TransactionsRepository()
+        ))
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,

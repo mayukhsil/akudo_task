@@ -6,9 +6,9 @@ import 'package:bloc/bloc.dart';
 
 class AccountDetailsBloc extends Bloc<AccountDetailsEvent,AccountDetailsState> {
   final UserRepository userRepository;
-  AccountDetailsBloc({this.userRepository}) : assert(userRepository!=null), super(null);
+  AccountDetailsBloc({this.userRepository}) : super(null);
 
-  AccountDetailsState get initialState => AccountInitState();
+  AccountDetailsState get initialState => UserDetailsLoadingState();
 
   @override
   Stream<AccountDetailsState> mapEventToState(AccountDetailsEvent event) async* {
